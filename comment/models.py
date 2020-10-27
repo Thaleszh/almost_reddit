@@ -1,5 +1,5 @@
 from django.db import models
-
+from accounts.models import User
 
 # Create your models here.
 class Comment(models.Model):
@@ -11,7 +11,7 @@ class Comment(models.Model):
     )
 
     author = models.ForeignKey(
-        to= 'accounts.User',
+        to= User,
         on_delete=models.CASCADE
     )
 
