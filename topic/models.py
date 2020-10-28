@@ -20,8 +20,6 @@ class Topic(models.Model):
         on_delete=models.CASCADE
     )
 
-    description = models.TextField()
-
     url_name = models.SlugField()
 
     created_at = models.DateTimeField(
@@ -31,3 +29,6 @@ class Topic(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True
     )
+
+    description = models.TextField()
+
