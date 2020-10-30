@@ -1,24 +1,21 @@
 from rest_framework.generics import get_object_or_404
-from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from accounts.api.v1.permissions import IsOwnerOrReadOnly
-from post.api.v1.serializer import ChangePostSerializer, ReadPostSerializer
+from post.api.v1.serializer import PostSerializer
 from post.models import Post
+from topic.models import Topic
 
 
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
-    serializer_class = ChangePostSerializer
+    serializer_class = PostSerializer
     permission_classes = [IsOwnerOrReadOnly]
 
-    def list(self, request, topic_pk=None,):
-        queryset = Post.objects.filter(topic=topic_pk)
-        serializer = ReadPostSerializer(queryset, many=True)
-        return Response(serializer.data)
+    def filter_queryset(self, queryset):
+        topic_url_name = self.kwargs.get('topic_url_name')
+        return queryset.filter(topic__url_name=topic_url_name)
 
-    def retrieve(self, request, pk=None, topic_pk=None):
-        queryset = Post.objects.filter(pk=pk, topic=topic_pk)
-        post = get_object_or_404(queryset, pk=pk)
-        serializer = ReadPostSerializer(post)
-        return Response(serializer.data)
+    def perform_create(self, serializer):
+        topic = get_object_or_404(Topic, url_name=self.kwargs.get('topic_url_name'))
+        serializer.save(topic=topic)

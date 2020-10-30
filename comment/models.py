@@ -1,8 +1,9 @@
 from django.db import models
 from accounts.models import User
+from helpers.models import TimestampModel
 
-# Create your models here.
-class Comment(models.Model):
+
+class Comment(TimestampModel):
     def __str__(self):
         return self.title
 
@@ -16,14 +17,6 @@ class Comment(models.Model):
     )
 
     content = models.TextField()
-
-    created_at = models.DateTimeField(
-        auto_now_add=True
-    )
-
-    updated_at = models.DateTimeField(
-        auto_now=True
-    )
 
     post = models.ForeignKey(
         to='post.Post',
