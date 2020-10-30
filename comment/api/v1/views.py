@@ -1,10 +1,13 @@
 from rest_framework.viewsets import ModelViewSet
 
-from comment.api.v1.serializer import CommentSerializer
+import comment.api.v1.serializer as serializer
 from comment.models import Comment
 
 
 class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
 
-    serializer_class = CommentSerializer
+    def get_serializer_class(self):
+        if self.action in ['list', 'retrieve']:
+            return serializer.ReadCommentSerializer
+        return serializer.ChangeCommentSerializer
