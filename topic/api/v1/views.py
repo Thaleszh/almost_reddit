@@ -3,20 +3,15 @@ from rest_framework.permissions import BasePermission, SAFE_METHODS
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
+from accounts.api.v1.permissions import IsOwnerOrReadOnly
 from topic.api.v1.serializer import ReadTopicSerializer, ChangeTopicSerializer
 from topic.models import Topic
-
-
-class IsOwnerOrReadOnly(BasePermission):
-    def has_object_permission(self, request, view, obj):
-        if request.method in SAFE_METHODS:
-            return True
-        return obj.owner == request.user
 
 
 class TopicViewSet(ModelViewSet):
     queryset = Topic.objects.all()
     serializer_class = ChangeTopicSerializer
+    permission_classes = [IsOwnerOrReadOnly]
 
     def list(self, request,):
         queryset = Topic.objects.filter()
