@@ -1,9 +1,9 @@
 from django.db import models
 from accounts.models import User
+from helpers.models import TimestampModel
 
 
-# Create your models here.
-class Topic(models.Model):
+class Topic(TimestampModel):
     def __str__(self):
         return self.name
 
@@ -21,14 +21,6 @@ class Topic(models.Model):
     )
 
     url_name = models.SlugField()
-
-    created_at = models.DateTimeField(
-        auto_now_add=True
-    )
-
-    updated_at = models.DateTimeField(
-        auto_now=True
-    )
 
     description = models.TextField()
 
