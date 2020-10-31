@@ -39,3 +39,37 @@ The following apps have been implemented, their model is the one recommended by 
 - Run the server with `python manage.py runserver 8000`
 - To use postman you might need to create a superuser with `python manage.py createsuperuser ` and then 
 get the accounts authentication token with `python manage.py drf_create_token <user_name>`
+
+## Json Examples
+- Here's a few examples of jsons for creating topics, posts and comments.
+
+Topic:
+```json
+{
+    "name": "RPG Lovers",
+    "title": "lovers of RPG",
+    "author" : 1,
+    "url_name": "rpg_lov",
+    "description": "A place for lovers of rpg"
+}
+```
+
+Post:
+```json
+{
+    "title" : "I like RPG",
+    "author" : 2,
+    "topic" : 1,
+    "content" : "I really enjoy it"
+}
+```
+
+Comment:
+```json
+{
+    "title" : "My view",
+    "author" : 2,
+    "post" : 1,
+    "content" : "I agree"
+}
+```
